@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -7,20 +6,93 @@
     <meta name="viewport"
           content="width=device-width, initial-scale=1.0">
 
-    <title>Contribution Page</title>
+    <title>Team Contribution</title>
 
-    <link rel="stylesheet" href="style.css">
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f6f9;
+            margin: 0;
+            padding: 30px 15px;
+        }
+
+        .container {
+            max-width: 750px;
+            margin: 40px auto;
+            background-color: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            text-align: center;
+            color: #2563eb;
+        }
+
+        h2 {
+            color: #333;
+            margin-top: 25px;
+        }
+
+        p, li {
+            line-height: 1.6;
+        }
+
+        button {
+            padding: 12px 20px;
+            background-color: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 15px;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        #contributor-student-id {
+            font-weight: bold;
+            color: #16a34a;
+            margin-top: 15px;
+        }
+
+        a {
+            display: inline-block;
+            margin-top: 25px;
+            color: #2563eb;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 
 <body>
 
 <div class="container">
 
-    <h1>Contribution Page</h1>
+    <h1>Team Contribution</h1>
 
     <h2>Task Manager Application</h2>
 
-    <p><strong>Student ID:</strong> 74330</p>
+    <p>
+        <strong>Repository Owner:</strong>
+        Student 74330
+    </p>
+
+    <p>
+        <strong>Contributor:</strong>
+        Student 72927
+    </p>
 
     <h2>Project Description</h2>
 
@@ -28,6 +100,14 @@
         This Task Manager application was developed
         using HTML, CSS, JavaScript, and the
         Supabase REST API.
+    </p>
+
+    <p>
+        Student 72927 contributed to this project
+        by developing the Team Contribution page
+        and implementing JavaScript functionality
+        to retrieve contributor information from
+        a JSON file.
     </p>
 
     <h2>Implemented Features</h2>
@@ -39,20 +119,97 @@
         <li>Mark tasks as completed or incomplete</li>
         <li>Delete tasks</li>
         <li>Store tasks in a Supabase database</li>
+        <li>Display contributor information using JSON</li>
     </ul>
+
+    <h2>My Contribution</h2>
+
+    <p>
+        As Student 74330, my contribution involved
+        creating the contributor information page,
+        implementing the Show Contributor button,
+        and using the JavaScript Fetch API to
+        retrieve contributor data from
+        contribution.json.
+    </p>
+
+    <p>
+        This contribution was submitted through
+        GitHub using a fork, a dedicated feature
+        branch, and a Pull Request as part of
+        the Vistula University team collaboration
+        assignment.
+    </p>
 
     <h2>Technologies Used</h2>
 
+    <ul>
+        <li>HTML5</li>
+        <li>CSS3</li>
+        <li>JavaScript</li>
+        <li>JSON</li>
+        <li>Supabase REST API</li>
+        <li>GitHub and GitHub Pages</li>
+    </ul>
+
+    <h2>Contributor Information</h2>
+
     <p>
-        HTML, CSS, JavaScript, Supabase,
-        REST API, and GitHub Pages.
+        Click the button below to display
+        the contributor's student ID.
     </p>
+
+    <button id="load-contributor">
+        Show Contributor
+    </button>
+
+    <p id="contributor-student-id"
+       aria-live="polite"></p>
 
     <a href="index.html">
         Back to Task Manager
     </a>
 
 </div>
+
+<script>
+    document.getElementById("load-contributor")
+        .addEventListener("click", async function () {
+
+            const output = document.getElementById(
+                "contributor-student-id"
+            );
+
+            try {
+                const response = await fetch(
+                    "contribution.json",
+                    { cache: "no-store" }
+                );
+
+                if (!response.ok) {
+                    throw new Error(
+                        "Failed to load contributor information"
+                    );
+                }
+
+                const data = await response.json();
+
+                if (!data.contributorStudentId) {
+                    throw new Error(
+                        "Contributor Student ID is missing"
+                    );
+                }
+
+                output.textContent =
+                    "Contributor Student ID: " +
+                    data.contributorStudentId;
+
+            } catch (error) {
+                output.textContent =
+                    "Error: " + error.message;
+            }
+        });
+</script>
 
 </body>
 </html>
